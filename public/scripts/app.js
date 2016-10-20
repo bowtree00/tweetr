@@ -105,7 +105,7 @@ function createTweetElement(tweet) {
 
 
 function renderTweets (tweets_data) {
-
+ 
   tweets = [];
 
   tweets_data.forEach(function(element) {

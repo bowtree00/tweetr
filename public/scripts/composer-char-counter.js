@@ -1,5 +1,5 @@
 $(function() {
-
+ 
   var maxLength = 140;
 
   $(".new-tweet textarea").on("keyup", function() {

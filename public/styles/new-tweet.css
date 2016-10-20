@@ -1,0 +1,29 @@
+.new-tweet {
+  margin: 0 2em;
+  background-color: lightgrey;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+.new-tweet h2 {
+  border-bottom: 1px solid grey;
+  margin: 10px;
+}
+
+form {
+  margin: 0.5em;
+}
+textarea {
+  padding: 3px;
+  width: 100%;
+}
+
+.counter {
+    float: right;
+    font-size: 0.8em;
+    margin-top: 3px;
+}
+
+.counter.negative {
+    color: red;
+}
