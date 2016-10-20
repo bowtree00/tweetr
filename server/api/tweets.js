@@ -30,6 +30,7 @@ module.exports = function(db) {
     };
     db.saveTweet(tweet);
     return res.send();
+    // return res.json({ name: "Christian"});
   });
 
   return tweets;

@@ -14,7 +14,7 @@ $(function() {
     
     $counter.text(maxLength - $currLength);
 
-    console.log("$counter.text(): " + $counter.text());
+    // console.log("$counter.text(): " + $counter.text());
 
     if ($counter.text() < 0 ) {
       // $counter.css("color", "red");
