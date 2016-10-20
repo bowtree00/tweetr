@@ -26,7 +26,7 @@ var tweetData = {
 var data = [
   {
     "user": {
-      "name": "Newton",
+      "name": "Newton <script>alert(\"here!\")</script>",
       "avatars": {
         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
@@ -71,41 +71,53 @@ var data = [
 ];
 
 
-function renderTweets(tweets) {
-  // loops through tweets
-    // calls createTweetElement for each tweet
-    // takes return value and appends it to the tweets container
-}
-
-
 function createTweetElement(tweet) {
 
-  var $tweet = $("<article>").addClass("tweet");
-  //$tweet.append("<header>");
+  // NOTE: using .text() method, which will escape potentially insecure text (e.g., text with HTML tags or scripts in it), and thus protect against Cross-Site Scripting
+  
   var avatar = tweet.user.avatars.small;
   var userName = tweet.user.name;
   var handle = tweet.user.handle;
 
-   $tweet.append('<header><img class="avatar" src="' + avatar + '"><h2>' + userName + '</h2><div>' + handle + '</div></header>');
+  var $header = $("<header>"); // NOTE: This creates a header DOM object, not linked to anything. 
+  // The following code appends things to the header object.
+  $header.append($('<img src="' + avatar + '">').addClass('avatar')); 
+  $header.append($('<h2>').text(userName));
+  $header.append($('<div>').text(handle));
 
-   var content = tweet.content.text;
-   var postDate = tweet.created_at;
-   var d = new Date();
-   var currentDate = d.getTime();
-   var daysAgo = Math.floor((d - postDate) / (1000*60*60*24));
+  var content = tweet.content.text;
+  var $body = $('<div>').addClass('body').text(content);
 
-   $tweet.append('<div class="body">' + content + '</div>');
+  // figure out how many days ago the post was made
+  var postDate = tweet.created_at;
+  var d = new Date();
+  var currentDate = d.getTime();
+  var daysAgo = Math.floor((d - postDate) / (1000*60*60*24));
 
-   $tweet.append('<footer><div>' + daysAgo + ' days ago</div><div class="footer-icons">');
+  var $footer = $('<footer>');
+  $footer.append($('<div>').text(daysAgo + ' days ago'));
+  var $icons = $('<div>').addClass('footer-icons');
+  
+  ["/images/flag.png", "/images/recycle.png", "/images/heart.png"].forEach(function(image) {
+    $icons.append($('<img src="' + image + '">').addClass('avatar'));
+  });
 
-    // console.log($tweet);
+  $footer.append($icons);
+
+  var $tweet = $("<article>").addClass("tweet");
+  $tweet.append($header);
+  $tweet.append($body);
+  $tweet.append($footer);
 
   return $tweet;
 }
 
 
 function renderTweets (tweets_data) {
- 
+   // loops through tweets
+    // calls createTweetElement for each tweet
+    // takes return value and appends it to the tweets container
+
   tweets = [];
 
   tweets_data.forEach(function(element) {
@@ -117,14 +129,10 @@ function renderTweets (tweets_data) {
 }
 
 
-//$tweet = createTweetElement(tweetData);
-$tweets = renderTweets(data);
-
 // // Test / driver code (temporary)
-// console.log($tweet); // to see what it looks like
-// $('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right elements, classes, etc.
 
-$('#tweets-container').append($tweets); 
+// $('#tweets-container').append(createTweetElement(data[0])); 
+$('#tweets-container').append(renderTweets(data)); 
 
 })
 
