@@ -4,14 +4,21 @@ const User    = require("../lib/user-helper")
 const express = require('express');
 const tweets  = express.Router();
 
-module.exports = function(db) {
+const tweetsDb = require('../lib/db'); // THIS IS NEW
+
+module.exports = function() {
 
   tweets.get("/", function(req, res) {
-    let tweets = db.getTweets();
-    // simulate delay
-    setTimeout(() => {
-      return res.json(tweets);
-    }, 300);
+    // let tweets = db.getTweets();
+
+    tweetsDb.getTweets( (err, allTweets) => {
+      return res.json(allTweets);
+    })
+
+    // // simulate delay
+    // setTimeout(() => {
+    //   return res.json(tweets);
+    // }, 300);
   });
 
   tweets.post("/", function(req, res) {
@@ -28,9 +35,17 @@ module.exports = function(db) {
       },
       created_at: Date.now()
     };
-    db.saveTweet(tweet);
-    return res.send();
-    // return res.json({ name: "Christian"});
+    
+    tweetsDb.saveTweet(tweet, (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      return res.send();
+    });
+
+    // db.saveTweet(tweet);
+    // return res.send();
+
   });
 
   return tweets;
