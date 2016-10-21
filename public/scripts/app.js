@@ -1,77 +1,5 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-
 $(function() {
 
-  // Test / driver code (temporary). Eventually will get this from the server.
-  // var tweetData = {
-  //   "user": {
-  //     "name": "Newton",
-  //     "avatars": {
-  //       "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //       "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //       "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //     },
-  //     "handle": "@SirIsaac"
-  //   },
-  //   "content": {
-  //     "text": "If I have seen further it is by standing on the shoulders of giants"
-  //   },
-  //   "created_at": 1461116232227
-  // }
-
-  // var data = [
-  //   {
-  //     "user": {
-  //       "name": "Newton",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //         "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //       },
-  //       "handle": "@SirIsaac"
-  //     },
-  //     "content": {
-  //       "text": "If I have seen further it is by standing on the shoulders of giants"
-  //     },
-  //     "created_at": 1461116232227
-  //   },
-  //   {
-  //     "user": {
-  //       "name": "Descartes",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-  //         "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-  //         "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-  //       },
-  //       "handle": "@rd" },
-  //     "content": {
-  //       "text": "Je pense , donc je suis"
-  //     },
-  //     "created_at": 1461113959088
-  //   },
-  //   {
-  //     "user": {
-  //       "name": "Johann von Goethe",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-  //         "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-  //         "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-  //       },
-  //       "handle": "@johann49"
-  //     },
-  //     "content": {
-  //       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-  //     },
-  //     "created_at": 1461113796368
-  //   }
-  // ];
-
-
-  // *** CODE THAT POSTS OLD TWEETS ****
   function createTweetElement(tweet) {
     // NOTE: using .text() method, which will escape potentially insecure text (e.g., text with HTML tags or scripts in it), and thus protect against Cross-Site Scripting
     
@@ -131,14 +59,8 @@ $(function() {
   }
 
 
-  // // Test / driver code (temporary)
-  // $('#tweets-container').append(createTweetElement(data[0])); 
-  // $('#tweets-container').append(renderTweets(data)); 
+  // *** Hijax: CODE THAT DOES AJAX WHEN POSTING A NEW TWEET ****
 
-
-  // *** CODE THAT DOES AJAX WHEN POSTING A NEW TWEET ****
-
-  // Hijax
   $('form[action="/tweets/"]').on('submit', function (event) {
     event.preventDefault(); // stop the form from POSTING to HTTP server
 
@@ -163,53 +85,37 @@ $(function() {
       data: $(this).serialize() // goes through all inputs in the form, and sets them to the format they need to be to set them as the data attributes in an ajax request.
     }).then(function successCb(data) {
 
-      console.log("SUCCESS!", $textarea.val());
-      $textarea.val("");
+        $textarea.val(""); // clear textarea
 
-      loadTweets(function Cb (loadedTweets) {
-        // get newest tweet from loaded tweets
-        // 
-      // console.log("loadedTweets", loadedTweets[0]);
+        loadTweets(function Cb (loadedTweets) {
+          // Posts the newest tweet to the #tweets-container
 
-      $('#tweets-container').prepend(loadedTweets[0]);
-        
-      });
-
-      console.log("Tweets:", tweets);
-      // $tweet = createTweetElement(data);
-      // $('#tweets-container').append(renderTweets(data)); 
-
-    }, function errorCb(err) {
-      console.error("ERROR! ", err);
+          $('#tweets-container').prepend(loadedTweets[0]).slideDown(); // This will prepend the first element of the array received from the GET call to the server in the loadTweets function 
+        });
+      }, function errorCb(err) {
+        console.error("ERROR! ", err);
     })
-
-
 
   });
 
 
-// **** LOAD TWEETS from server ****
-
-  
+// **** LOAD TWEETS from server and package into DOM object ****
 
   function loadTweets (cb) {
-
+    // GETS tweets from the server
+    // CALLS renderTweets to package the returned data in a DOM object
+    // Runs the CB that it's sent with the loaded tweets DOM object
+    // ** REFACTOR THIS ** - Should probably only LOAD the data, and then use another callback that PACKAGES the returned data in a DOM object (using renderTweets)
+    
     $.ajax({
       method: 'get',
       url: '/tweets',
-      //data: $(this) // DON'T NEED 'data' here. Also, 'this' refers to the browser window, since loadTweets does not refer to anything
+      //data: // DON'T NEED 'data' here??
       dataType: 'json'
     }).then(function successCb(data) {
-      // console.log(data);
-      // console.log(renderTweets(data));
-      // console.log("Load tweets successful!");
       
-      loadedTweets = renderTweets(data); // pass this to the global variable loadedTweets
-      // $('#tweets-container').append(renderTweets(data)); 
-      
-      // $('#tweets-container').append(loadedTweets); 
-
-      cb(loadedTweets); // this calls the callback that was sent
+      loadedTweets = renderTweets(data); // this calls renderTweets so that the data that is received from our GET call is packaged in a DOM object
+      cb(loadedTweets); // this calls the callback that was sent with the loadedTweets variable
 
     }, function errorCb(err) {
       console.error("ERROR! ", err);
@@ -217,7 +123,8 @@ $(function() {
 
   }
 
-loadTweets(function (loadedTweets) { $('#tweets-container').append(loadedTweets) })
+// This calls the loadTweets function and the CB here tells it to append the loaded tweets to the $tweets-container.
+loadTweets(function (loadedTweets) { $('#tweets-container').append(loadedTweets) });
 
 })
 
