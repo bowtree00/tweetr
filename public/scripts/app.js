@@ -125,6 +125,8 @@ $(function() {
       tweets.push($tweet);
     });
 
+    tweets.reverse();
+
     return tweets;
   }
 
@@ -160,17 +162,38 @@ $(function() {
       url: '/tweets/',
       data: $(this).serialize() // goes through all inputs in the form, and sets them to the format they need to be to set them as the data attributes in an ajax request.
     }).then(function successCb(data) {
+
       console.log("SUCCESS!", $textarea.val());
       $textarea.val("");
+
+      loadTweets(function Cb (loadedTweets) {
+        // get newest tweet from loaded tweets
+        // 
+      // console.log("loadedTweets", loadedTweets[0]);
+
+      $('#tweets-container').prepend(loadedTweets[0]);
+        
+      });
+
+      console.log("Tweets:", tweets);
+      // $tweet = createTweetElement(data);
+      // $('#tweets-container').append(renderTweets(data)); 
+
     }, function errorCb(err) {
       console.error("ERROR! ", err);
     })
+
+
+
   });
 
 
 // **** LOAD TWEETS from server ****
 
-  function loadTweets () {
+  
+
+  function loadTweets (cb) {
+
     $.ajax({
       method: 'get',
       url: '/tweets',
@@ -178,14 +201,23 @@ $(function() {
       dataType: 'json'
     }).then(function successCb(data) {
       // console.log(data);
-      // renderTweets(data);
-      $('#tweets-container').append(renderTweets(data)); 
+      // console.log(renderTweets(data));
+      // console.log("Load tweets successful!");
+      
+      loadedTweets = renderTweets(data); // pass this to the global variable loadedTweets
+      // $('#tweets-container').append(renderTweets(data)); 
+      
+      // $('#tweets-container').append(loadedTweets); 
+
+      cb(loadedTweets); // this calls the callback that was sent
+
     }, function errorCb(err) {
       console.error("ERROR! ", err);
     })
+
   }
 
-loadTweets()
+loadTweets(function (loadedTweets) { $('#tweets-container').append(loadedTweets) })
 
 })
 
