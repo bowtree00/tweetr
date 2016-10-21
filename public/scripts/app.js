@@ -128,10 +128,10 @@ $(function() {
     return tweets;
   }
 
+
   // // Test / driver code (temporary)
   // $('#tweets-container').append(createTweetElement(data[0])); 
   // $('#tweets-container').append(renderTweets(data)); 
-
 
 
   // *** CODE THAT DOES AJAX WHEN POSTING A NEW TWEET ****
@@ -142,26 +142,16 @@ $(function() {
 
     var $textarea = $('textarea', this);
 
-    // $('.form-message').remove();
-    // $('.counter', this).removeClass('error-message');
-
     // form validation
     if ($textarea.val().length === 0) {
-      // var $div = $('<div>').addClass('form-message').text("Please enter at least one character for your tweet.");
-      // // $('#tweets-container').prepend($div);
-      // $(this).append($div);
-
       $('.counter', this).text("Must enter at least one character").addClass('negative');
 
       return
     }
 
     if ($textarea.val().length > 140) {
-      // var $div = $('<div>').addClass('form-message').text("Your message is too long! Please keep it to 140 characters");
-      // // $('#tweets-container').prepend($div);
-      // $(this).append($div);
-
       $('.counter', this).text("Too many characters!").addClass('negative');
+      
       return
     }
 
@@ -175,10 +165,7 @@ $(function() {
     }, function errorCb(err) {
       console.error("ERROR! ", err);
     })
-
-
-
-  })
+  });
 
 
 // **** LOAD TWEETS from server ****
