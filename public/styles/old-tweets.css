@@ -8,6 +8,7 @@ article {
 
 article:hover {
   opacity: 1;
+  visibility: visible;
 }
 
 header {
@@ -41,6 +42,7 @@ article footer {
   border-top: 1px solid lightgrey;
   padding: 6px;
 }
+
 article footer div {
   font-size: 60%
 }
@@ -50,6 +52,24 @@ article .body {
   display: inline-block;
   margin: 20px 0px 20px 10px;
 }
+
+.footer-counter {
+  float: left;
+  clear: left;
+}
+
+.footer-icons .avatar {
+  float: right;
+  height: 15px;
+  width: auto;
+  margin: 2px;
+  visibility: hidden;
+}
+
+article:hover .footer-icons .avatar {
+  visibility: visible;
+}
+
 
 /*.footer-icons {
   width: 10px;

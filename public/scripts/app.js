@@ -17,13 +17,17 @@ $(function() {
     var $body = $('<div>').addClass('body').text(content);
 
     // figure out how many days ago the post was made
-    var postDate = tweet.created_at;
+    
     var d = new Date();
     var currentDate = d.getTime();
-    var daysAgo = Math.floor((d - postDate) / (1000*60*60*24));
+    var postDate = tweet.created_at;
+    var daysAgo = Math.floor(Math.abs((currentDate - postDate) / (1000*60*60*24)));
+    console.log("currentDate: ", currentDate);
+    console.log("postDate: ", postDate);
+    console.log("daysAgo: ", daysAgo);
 
     var $footer = $('<footer>');
-    $footer.append($('<div>').text(daysAgo + ' days ago'));
+    $footer.append($('<div>').addClass('footer-counter').text(daysAgo + ' days ago'));
     var $icons = $('<div>').addClass('footer-icons');
     
     ["/images/flag.png", "/images/recycle.png", "/images/heart.png"].forEach(function(image) {
@@ -61,6 +65,13 @@ $(function() {
 
   // *** Hijax: CODE THAT DOES AJAX WHEN POSTING A NEW TWEET ****
 
+  $('.compose-button').on('click', function() { 
+    $('.new-tweet').slideDown("slow", function(){});
+  });
+    // 
+  // })
+
+
   $('form[action="/tweets/"]').on('submit', function (event) {
     event.preventDefault(); // stop the form from POSTING to HTTP server
 
@@ -91,7 +102,10 @@ $(function() {
           // Posts the newest tweet to the #tweets-container
 
           $('#tweets-container').prepend(loadedTweets[0]).slideDown(); // This will prepend the first element of the array received from the GET call to the server in the loadTweets function 
-        });
+
+          $('.new-tweet').slideUp("slow", function(){});
+          });
+
       }, function errorCb(err) {
         console.error("ERROR! ", err);
     })
@@ -124,7 +138,7 @@ $(function() {
   }
 
 // This calls the loadTweets function and the CB here tells it to append the loaded tweets to the $tweets-container.
-loadTweets(function (loadedTweets) { $('#tweets-container').append(loadedTweets) });
+  loadTweets(function (loadedTweets) { $('#tweets-container').append(loadedTweets) });
 
 })
 
