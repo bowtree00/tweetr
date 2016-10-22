@@ -66,7 +66,8 @@ $(function() {
   // *** Hijax: CODE THAT DOES AJAX WHEN POSTING A NEW TWEET ****
 
   $('.compose-button').on('click', function() { 
-    $('.new-tweet').slideDown("slow", function(){});
+    $('.new-tweet').slideToggle("slow", function(){});
+    $('textarea').focus();
   });
     // 
   // })
