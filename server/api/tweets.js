@@ -2,18 +2,20 @@
 
 const User    = require("../lib/user-helper")
 const express = require('express');
-const tweets  = express.Router();
+const router  = express.Router();
 
-const tweetsDb = require('../lib/db'); // THIS IS NEW
+// const tweetsDb = require('../lib/db'); // THIS IS NEW
 
-module.exports = function() {
+module.exports = function(tweets_api) {
 
-  tweets.get("/", function(req, res) {
+  router.get("/", function(req, res) {
     // let tweets = db.getTweets();
 
-    tweetsDb.getTweets( (err, allTweets) => {
+    tweets_api.getTweets( (err, allTweets) => {
       return res.json(allTweets);
-    })
+      console.log('Am i first?')
+    });
+    console.log('Finished');
 
     // // simulate delay
     // setTimeout(() => {
@@ -21,7 +23,7 @@ module.exports = function() {
     // }, 300);
   });
 
-  tweets.post("/", function(req, res) {
+  router.post("/", function(req, res) {
     if (!req.body.text) {
       res.status(400);
       return res.send("{'error': 'invalid request'}\n");
@@ -36,7 +38,7 @@ module.exports = function() {
       created_at: Date.now()
     };
     
-    tweetsDb.saveTweet(tweet, (err, result) => {
+    tweets_api.saveTweet(tweet, (err, result) => {
       if (err) {
         console.log(err);
       }
@@ -48,6 +50,6 @@ module.exports = function() {
 
   });
 
-  return tweets;
+  return router;
 
 }
