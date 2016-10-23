@@ -5,6 +5,8 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const app         = express();
 
+require('dotenv').config();
+
 const tweetsApi  = require('./api/tweets');
 const db         = require('./lib/db');
 
