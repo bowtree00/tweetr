@@ -3,6 +3,7 @@
  * https://css-tricks.com/international-box-sizing-awareness-day/
  * Do not modify these two selectors, please
  */
+
 html {
   box-sizing: border-box;
 }
@@ -25,12 +26,26 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 
+/*Media query with a range */
+
+/* Default CSS for small screens*/
 main {
-  width: 450px;
+  width: 350px;
   margin: 0 auto;
   background-color: white;
-  padding-top: 100px;
+  padding-top: 80px;
 }
+
+/*Media query with a range */
+@media (min-width:450px) {
+  main {
+    width: 450px;
+    padding-top: 100px;
+  }
+}
+
+
+
 
 
 

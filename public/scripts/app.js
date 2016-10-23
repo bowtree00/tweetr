@@ -104,7 +104,8 @@ $(function() {
 
           $('#tweets-container').prepend(loadedTweets[0]).slideDown(); // This will prepend the first element of the array received from the GET call to the server in the loadTweets function 
 
-          $('.new-tweet').slideUp("slow", function(){});
+          // $('.new-tweet').slideUp("slow", function(){});
+
           });
 
       }, function errorCb(err) {

@@ -1,24 +1,3 @@
-.new-tweet {
-  margin: 0 2em;
-  background-color: lightgrey;
-  border: 1px solid grey;
-  border-radius: 5px;
-}
-
-.new-tweet h2 {
-  border-bottom: 1px solid grey;
-  margin: 10px;
-}
-
-form {
-  margin: 0.5em;
-}
-
-textarea {
-  padding: 3px;
-  width: 100%;
-}
-
 .counter {
     float: right;
     font-size: 0.8em;
@@ -27,4 +6,39 @@ textarea {
 
 .counter.negative {
     color: red;
+}
+
+form {
+  margin: 0.5em;
+
+}
+
+.new-tweet {
+  margin: 0.5em 1em;
+  background-color: lightgrey;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-size: 0.9em; /*Adjusts all font sizes in the 'new-tweet'*/
+}
+
+.new-tweet h2 {
+  border-bottom: 1px solid grey;
+  margin: 10px;
+}
+
+textarea {
+  padding: 3px;
+  width: 100%;
+}
+
+/*Media query with a range */
+/*NOTE: This section only needs CSS for the things that I want to CHANGE.
+Do not need to repeat everything here.*/
+@media (min-width:450px) {
+
+  .new-tweet {
+    margin: 0 2em;
+    font-size: 1em; /*Adjusts all font sizes in the 'new-tweet'*/
+  }
+
 }

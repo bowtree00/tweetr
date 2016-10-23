@@ -13,14 +13,8 @@ module.exports = function(tweets_api) {
 
     tweets_api.getTweets( (err, allTweets) => {
       return res.json(allTweets);
-      console.log('Am i first?')
     });
-    console.log('Finished');
 
-    // // simulate delay
-    // setTimeout(() => {
-    //   return res.json(tweets);
-    // }, 300);
   });
 
   router.post("/", function(req, res) {

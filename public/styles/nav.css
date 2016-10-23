@@ -1,32 +1,22 @@
+/* Putting all of the mobile friendly CSS first, then using
+media queries to format for computer screens */
+
 #nav-bar {
   position: fixed;
   top: 0px;
-  height: 80px;
+  height: 60px;
   width: 100%;
   background-color: #00a087;
   color: #e8fdff;
-  padding: 0 2em;
+  padding: 0 1.5em;
   z-index: 9999;
-}
-
-#nav-bar .logo {
-  width: 80px; 
-  height: 80px;
-  float: left;
-}
-
-#nav-bar .header {
-  float: left;
-  font-size: 2em;
-  line-height: 2.5;
-  margin-left: 10px;
 }
 
 #nav-bar .compose-button {
   float: right;
   margin-top: 8px;
-  border: 2px solid grey;
-  border-radius: 5px;
+  border: 1px solid grey;
+  border-radius: 3px;
   background-color: #fff;
   opacity: 0.8;
 }
@@ -34,23 +24,74 @@
 #nav-bar .compose-text {
   float: right;
   line-height: 2.5;
-  font-size: 1.5em;
+  font-size: 1em;
   color: #00a087;
   margin-right: 10px;
+}
+
+#nav-bar .compose-logo {
+  float: left;
+  height: 15px;
+  width: auto;
+  margin: 12px 5px 0 10px;
 }
 
 #nav-bar .compose-text:hover {
   color: #000;
 }
 
-#nav-bar .compose-logo {
-  float: left;
-  height: 20px;
-  width: 20px;
-  margin: 20px 5px 0 10px;
-}
-
 #nav-bar .compose-button:hover {
   opacity: 1;
   color: #000;
+}
+
+#nav-bar .header {
+  float: left;
+  font-size: 1.5em;
+  line-height: 2.5;
+  margin-left: 10px;
+}
+
+#nav-bar .logo {
+  width: 60px; 
+  height: 60px;
+  float: left;
+}
+
+/*Media query with a range */
+/*NOTE: This section only needs CSS for the things that I want to CHANGE.
+Do not need to repeat everything here.*/
+
+@media (min-width:450px) {
+  #nav-bar {
+    height: 80px;
+    padding: 0 2em;
+  }
+
+  #nav-bar .compose-text {
+    font-size: 1.5em;
+  }
+
+  #nav-bar .compose-text:hover {
+    color: #000;
+  }
+
+  #nav-bar .compose-button:hover {
+    opacity: 1;
+    color: #000;
+  }
+
+  #nav-bar .compose-logo {
+    height: 20px;
+    margin: 20px 5px 0 10px;
+  }
+
+  #nav-bar .header {
+    font-size: 2em;
+  }
+
+  #nav-bar .logo {
+    width: 80px; 
+    height: 80px;
+  }
 }
